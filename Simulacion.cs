@@ -77,8 +77,7 @@ namespace final_sim
                     costos = calcularCostos(docenasOferta, sobrantes);
                     ingresos = calcularIngresos(docenasOferta, sobrantes);
                 }
-
-                
+                                
                 double ganancia = ingresos[2] - costos[2]; // ingreso total - costo total
                 gananciaAcumulada += ganancia;
 
@@ -94,18 +93,28 @@ namespace final_sim
         {
             grdMontecarlo.Rows.Clear();
             int cantDias = dias;
+            int cantDemanda = 0;
             int docenasOferta = oferta;      
             double gananciaAcumulada = 0;
             Random random = new Random();
+
+            int sobrantes = 0;
 
             for (int i = 0; i < cantDias; i++)
             {
                 double rndClima = random.NextDouble();
                 string clima = clasificarClima(rndClima);
                 double rndCantDemanda = random.NextDouble();
-                int cantDemanda = calcularDemanda(rndCantDemanda, clima);
 
-                int sobrantes = docenasOferta - cantDemanda;
+                if (( (i+1) % 7) == 0)
+                {
+                    cantDemanda = 0;
+                    sobrantes = docenasOferta - cantDemanda;
+                }
+                else {
+                    cantDemanda = calcularDemanda(rndCantDemanda, clima);
+                    sobrantes = docenasOferta - cantDemanda;
+                }
 
                 double[] costos = new double[3];
                 double[] ingresos = new double[3];
@@ -166,7 +175,6 @@ namespace final_sim
             double costoPerdida = 0;
             if (sobrantes <= 0) { costoPerdida = Math.Abs(sobrantes) * 0.96; } //$0.08 la unidad -> $0.96
    
-
             double costoTotal = costoCompra + costoPerdida;
             vector[0] = costoCompra;
             vector[1] = costoPerdida;
@@ -180,7 +188,6 @@ namespace final_sim
             double costoFaltante = 0;
             if (sobrantes <= 0) { costoFaltante = Math.Abs(sobrantes) * 11; } // $11 la docena
             
-
             double costoTotal = costoCompra + costoFaltante;
             vector[0] = costoCompra;
             vector[1] = costoFaltante;
@@ -208,7 +215,7 @@ namespace final_sim
         {
             double[] vector = new double[3];
             double ingresoVenta = 0;
-            if (sobrantes <= 0) { ingresoVenta = cantOferta * 12 + Math.Abs(sobrantes) * 12; } // $1 la unidad -> $12 la docena
+            if (sobrantes <= 0) { ingresoVenta = cantOferta * 12 + Math.Abs(sobrantes) * 12; } // $1 la unidad -> $12 la docena (también vende el faltante comprado)
             else { ingresoVenta = (cantOferta - sobrantes) * 12; }
 
             double ingresoRecup = 0;
