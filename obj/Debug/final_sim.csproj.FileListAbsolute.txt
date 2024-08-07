@@ -1,0 +1,12 @@
+F:\NuevoGit\final_sim\bin\Debug\final_sim.exe.config
+F:\NuevoGit\final_sim\bin\Debug\final_sim.exe
+F:\NuevoGit\final_sim\bin\Debug\final_sim.pdb
+F:\NuevoGit\final_sim\obj\Debug\final_sim.csproj.AssemblyReference.cache
+F:\NuevoGit\final_sim\obj\Debug\final_sim.csproj.SuggestedBindingRedirects.cache
+F:\NuevoGit\final_sim\obj\Debug\final_sim.Properties.Resources.resources
+F:\NuevoGit\final_sim\obj\Debug\final_sim.Simulacion.resources
+F:\NuevoGit\final_sim\obj\Debug\final_sim.csproj.GenerateResource.cache
+F:\NuevoGit\final_sim\obj\Debug\final_sim.csproj.CoreCompileInputs.cache
+F:\NuevoGit\final_sim\obj\Debug\final_sim.exe
+F:\NuevoGit\final_sim\obj\Debug\final_sim.pdb
+F:\NuevoGit\final_sim\obj\Debug\final_sim.Inicio.resources
