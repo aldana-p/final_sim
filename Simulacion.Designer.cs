@@ -143,6 +143,7 @@
             this.txtCantDias.Name = "txtCantDias";
             this.txtCantDias.Size = new System.Drawing.Size(88, 24);
             this.txtCantDias.TabIndex = 4;
+            this.txtCantDias.Text = "100";
             // 
             // groupBox3
             // 

@@ -52,7 +52,7 @@
             // btnSimular
             // 
             this.btnSimular.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSimular.BackColor = System.Drawing.Color.IndianRed;
+            this.btnSimular.BackColor = System.Drawing.Color.PaleVioletRed;
             this.btnSimular.FlatAppearance.BorderSize = 0;
             this.btnSimular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSimular.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

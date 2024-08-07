@@ -16,7 +16,7 @@ namespace final_sim
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Inicio());
+            Application.Run(new Simulacion());
         }
     }
 }

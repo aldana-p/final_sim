@@ -27,6 +27,7 @@ namespace final_sim
             {
                 bool puntoD = false;
                 if (chkCompraFaltante.Checked) { puntoD = true; }
+
                 int cantDias = int.Parse(txtCantDias.Text);
                 if (rd7.Checked)
                 {
@@ -65,10 +66,19 @@ namespace final_sim
                 int sobrantes = docenasOferta - cantDemanda;
 
                 double[] costos = new double[3];
-                if (puntoD) { costos = calcularCostosPuntoD(docenasOferta, sobrantes); }
-                else { costos = calcularCostos(docenasOferta, sobrantes); }
+                double[] ingresos = new double[3];
+                if (puntoD) 
+                { 
+                    costos = calcularCostosPuntoD(docenasOferta, sobrantes);
+                    ingresos = calcularIngresosPuntoD(docenasOferta, sobrantes);
+                }
+                else 
+                {
+                    costos = calcularCostos(docenasOferta, sobrantes);
+                    ingresos = calcularIngresos(docenasOferta, sobrantes);
+                }
 
-                double[] ingresos = calcularIngresos(docenasOferta, sobrantes);
+                
                 double ganancia = ingresos[2] - costos[2]; // ingreso total - costo total
                 gananciaAcumulada += ganancia;
 
@@ -98,10 +108,18 @@ namespace final_sim
                 int sobrantes = docenasOferta - cantDemanda;
 
                 double[] costos = new double[3];
-                if (puntoD) { costos = calcularCostosPuntoD(docenasOferta, sobrantes); }
-                else { costos = calcularCostos(docenasOferta, sobrantes); }
-                
-                double[] ingresos = calcularIngresos(docenasOferta, sobrantes);
+                double[] ingresos = new double[3];
+                if (puntoD)
+                {
+                    costos = calcularCostosPuntoD(docenasOferta, sobrantes);
+                    ingresos = calcularIngresosPuntoD(docenasOferta, sobrantes);
+                }
+                else
+                {
+                    costos = calcularCostos(docenasOferta, sobrantes);
+                    ingresos = calcularIngresos(docenasOferta, sobrantes);
+                }
+
                 double ganancia = ingresos[2] - costos[2]; // ingreso total - costo total
                 gananciaAcumulada += ganancia;
 
@@ -113,7 +131,7 @@ namespace final_sim
 
         private string clasificarClima(double rnd)
         {
-            if (rnd > 0 && rnd < 0.73)
+            if (rnd >= 0 && rnd < 0.73)
             {
                 return "soleado";
             }
@@ -126,17 +144,18 @@ namespace final_sim
         {
             if (clima == "soleado")
             {
-                if (rnd > 0 && rnd < 0.1) { return 6; }
+                if (rnd >= 0 && rnd < 0.1) { return 6; }
                 if (rnd >= 0.1 && rnd < 0.3) { return 7; }
                 if (rnd >= 0.3 && rnd < 0.75) { return 8; }
                 if (rnd >= 0.75 && rnd < 1) { return 9; }
             }
             else
             {
-                if (rnd > 0 && rnd < 0.1) { return 6; }
-                if (rnd >= 0.1 && rnd < 0.3) { return 7; }
-                if (rnd >= 0.3 && rnd < 0.75) { return 8; }
-                if (rnd >= 0.75 && rnd < 1) { return 9; }
+                if (rnd >= 0 && rnd < 0.05) { return 3; }
+                if (rnd >= 0.05 && rnd < 0.2) { return 4; }
+                if (rnd >= 0.2 && rnd < 0.6) { return 5; }
+                if (rnd >= 0.6 && rnd < 0.85) { return 6; }
+                if (rnd >= 0.85 && rnd < 1) { return 7; }
             }
             return -1;
         }
@@ -185,6 +204,23 @@ namespace final_sim
             vector[2] = ingresoTotal;
             return vector;
         }
+        private double[] calcularIngresosPuntoD(int cantOferta, int sobrantes)
+        {
+            double[] vector = new double[3];
+            double ingresoVenta = 0;
+            if (sobrantes <= 0) { ingresoVenta = cantOferta * 12 + Math.Abs(sobrantes) * 12; } // $1 la unidad -> $12 la docena
+            else { ingresoVenta = (cantOferta - sobrantes) * 12; }
+
+            double ingresoRecup = 0;
+            if (sobrantes > 0) { ingresoRecup = sobrantes * 1.44; } // $0.12 la unidad -> $1.44 la docena
+
+            double ingresoTotal = ingresoVenta + ingresoRecup;
+            vector[0] = ingresoVenta;
+            vector[1] = ingresoRecup;
+            vector[2] = ingresoTotal;
+            return vector;
+        }
+
         private double truncarNumero(double numero)
         {
             return Math.Truncate(numero * 100) / 100;
